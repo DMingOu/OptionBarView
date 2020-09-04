@@ -28,8 +28,7 @@
 
 下图列举了几种常见的条目效果，项目还支持更多不同的效果搭配。
 
-<img src="C:%5CUsers%5CODM%5CAppData%5CRoaming%5CTypora%5Ctypora-user-images%5Cimage-20200904131126978.png" alt="image-20200904131126978" style="zoom:33%;" />
-
+<img src="http://picbed-dmingou.oss-cn-shenzhen.aliyuncs.com/img/image-20200904131126978.png" alt="image-20200904131126978" style="zoom:33%;" />
 
 
 ## Gradle集成方式
@@ -185,8 +184,7 @@ setDivideLineColor(int divideLineColor)
 
 主要是对一些图片文字的距离属性的说明。看图就能明白了。
 
-<img src="C:%5CUsers%5CODM%5CDesktop%5Csnipaste_20200904_134534.png"  />
-
+<img src="http://picbed-dmingou.oss-cn-shenzhen.aliyuncs.com/img/image-20200904131126978.png" alt="image-20200904131126978" style="zoom:33%;" />
 
 
 ## 混淆
