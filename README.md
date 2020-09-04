@@ -3,11 +3,11 @@
 [![](https://jitpack.io/v/DMingOu/OptionBarView.svg)](https://jitpack.io/#DMingOu/OptionBarView)   ![](http://picbed-dmingou.oss-cn-shenzhen.aliyuncs.com/img/platform-Android-lightgrey.svg)  ![](http://picbed-dmingou.oss-cn-shenzhen.aliyuncs.com/img/license-MIT-000000.svg)   ![](https://img.shields.io/badge/author-DMingOu-blue.svg)
 
 ## 项目简介
-**一个简单方便高度可定制的条目设置选项类型的View**
+**一个轻量级的适合快速编写出一个高度可定制的条目设置选项类型的View**
 
 ### 为什么想要封装一个这样的View？
 
-在做项目的过程中发现经常地要写各种各样的点击选项的条目，常见的"设置页"的条目，一般的做法是每写一个条目选项就要写一个布局然后里面配置一堆的View，虽然也能完成效果，但是如果数量很多或者设计图效果各异就会容易出错，同时一个页面如果有过多的布局嵌套也会影响效率。
+在做项目的过程中发现经常地要写各种各样的点击选项的条目，常见的"设置页"的条目，一般的做法是每写一个条目选项就要写一个布局然后里面配置一堆的View，虽然也能完成效果，但是如果数量很多或者设计图效果各异就会容易出错浪费很多时间，同时一个页面如果有过多的布局嵌套也会影响效率。
 
 于是，我开始找一些定制性高且内部不需要布局就能完成的框架。最后，我找到了由[GitLqr](GitLqr)作者开发的[LQROptionItemView](https://github.com/GitLqr/LQROptionItemView)，大体满足需求，在此非常感谢作者[GitLqr](GitLqr)，但是在使用过程中发现几个小问题：
 
