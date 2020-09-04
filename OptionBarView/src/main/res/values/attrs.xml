@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+      <declare-styleable name="OptionBarView">
+        <attr name="title" format="string"/>
+        <attr name="title_size" format="dimension"/>
+        <attr name="title_color" format="color"/>
+        <attr name="left_src" format="reference|color"/>
+        <attr name="left_text" format="string"/>
+        <attr name="left_text_size" format="dimension"/>
+        <attr name="left_src_width" format="dimension"/>
+        <attr name="left_src_height" format="dimension"/>
+        <attr name="left_image_margin_left" format="dimension"/>
+        <attr name="left_text_margin_left" format="dimension"/>
+        <attr name="left_image_margin_right" format="dimension"/>
+        <attr name="left_text_color" format="color"/>
+        <attr name="right_src" format="reference|color"/>
+        <attr name="right_text" format="string"/>
+        <attr name="right_text_size" format="dimension"/>
+        <attr name="right_src_width" format="dimension"/>
+        <attr name="right_src_height" format="dimension"/>
+        <attr name="right_image_margin_left" format="dimension"/>
+        <attr name="right_image_margin_right" format="dimension"/>
+        <attr name="right_text_margin_right" format="dimension"/>
+        <attr name="right_text_color" format="color"/>
+        <attr name="split_mode" format="boolean"/>
+        <attr name="show_divide_line" format="boolean"/>
+        <attr name="divide_line_top_gravity" format="boolean"/>
+        <attr name="divide_line_left_margin" format="dimension"/>
+        <attr name="divide_line_right_margin" format="dimension"/>
+        <attr name="divide_line_height" format="dimension"/>
+        <attr name="divide_line_color" format="color"/>
+    </declare-styleable>
+
+</resources>
