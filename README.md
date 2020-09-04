@@ -1,6 +1,6 @@
 ## OptionBarView
 
-[![](https://jitpack.io/v/DMingOu/OptionBarView.svg)](https://jitpack.io/#DMingOu/OptionBarView)   ![](http://picbed-dmingou.oss-cn-shenzhen.aliyuncs.com/img/platform-Android-lightgrey.svg)  ![](http://picbed-dmingou.oss-cn-shenzhen.aliyuncs.com/img/license-MIT-000000.svg)   ![](http://picbed-dmingou.oss-cn-shenzhen.aliyuncs.com/img/author-DMingO-blue.svg)
+[![](https://jitpack.io/v/DMingOu/OptionBarView.svg)](https://jitpack.io/#DMingOu/OptionBarView)   ![](http://picbed-dmingou.oss-cn-shenzhen.aliyuncs.com/img/platform-Android-lightgrey.svg)  ![](http://picbed-dmingou.oss-cn-shenzhen.aliyuncs.com/img/license-MIT-000000.svg)   ![](https://img.shields.io/badge/author-DMingOu-blue.svg)
 
 ## 项目简介
 **一个简单方便高度可定制的条目设置选项类型的View**
