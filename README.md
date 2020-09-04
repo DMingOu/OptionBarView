@@ -28,7 +28,9 @@
 
 下图列举了几种常见的条目效果，项目还支持更多不同的效果搭配。
 
-<div align=center><img width="320" height="640" src="http://picbed-dmingou.oss-cn-shenzhen.aliyuncs.com/img/image-20200904131126978.png"/></div>
+
+<img src="http://picbed-dmingou.oss-cn-shenzhen.aliyuncs.com/img/image-20200904131126978.png" width="40%" height="40%">
+
 
 ## Gradle集成方式
 
@@ -182,7 +184,7 @@ setDivideLineColor(int divideLineColor)
 ### 5、特殊属性说明
 
 主要是对一些图片文字的距离属性的说明。看图就能明白了。
-<div align=center><img width="320" height="640" src="http://picbed-dmingou.oss-cn-shenzhen.aliyuncs.com/img/snipaste_20200904_134534.png"/></div>
+<img src="http://picbed-dmingou.oss-cn-shenzhen.aliyuncs.com/img/snipaste_20200904_134534.png" width="40%" height="40%">
 
 ## 混淆
 
