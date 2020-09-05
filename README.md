@@ -28,8 +28,6 @@
 
 下图列举了几种常见的条目效果，项目还支持更多不同的效果搭配。
 
-
-<img src="http://picbed-dmingou.oss-cn-shenzhen.aliyuncs.com/img/20200905222041.png">
 <img src="http://picbed-dmingou.oss-cn-shenzhen.aliyuncs.com/img/20200905222714.png">
 
 
