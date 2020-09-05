@@ -30,6 +30,37 @@
         <attr name="divide_line_right_margin" format="dimension"/>
         <attr name="divide_line_height" format="dimension"/>
         <attr name="divide_line_color" format="color"/>
+		<attr name="rightViewType" format="enum">
+            <enum name="Image" value="0"/>
+            <enum name="Switch" value="1"/>
+            <enum name="Check" value="2"/>
+        </attr>
+
+		<attr name = "switch_background_width" format="reference|dimension"/>
+		<attr name = "switch_background_height" format="reference|dimension"/>
+		<attr name="switch_checkedbutton_color" format="reference|color"/>
+        <attr name="switch_uncheckbutton_color" format="reference|color"/>
+        <attr name="switch_shadow_color" format="reference|color"/>
+        <attr name="switch_uncheck_color" format="reference|color"/>
+        <attr name="switch_checked_color" format="reference|color"/>
+        <attr name="switch_border_width" format="reference|dimension"/>
+        <attr name="switch_checkline_color" format="reference|color"/>
+        <attr name="switch_checkline_width" format="reference|dimension"/>
+        <attr name="switch_uncheckcircle_color" format="reference|color"/>
+        <attr name="switch_uncheckcircle_width" format="reference|dimension"/>
+        <attr name="switch_uncheckcircle_radius" format="reference|dimension"/>
+        <attr name="switch_checked" format="reference|boolean"/>
+        <attr name="switch_shadow_effect" format="reference|boolean"/>
+        <attr name="switch_effect_duration" format="reference|integer"/>
+        <attr name="switch_button_color" format="reference|color"/>
+        <attr name="switch_show_indicator" format="reference|boolean"/>
+        <attr name="switch_background" format="reference|color"/>
+        <attr name="switch_enable_effect" format="reference|boolean"/>
+		<attr name="switch_shadow_radius" format="reference|dimension"/>
+        <attr name="switch_shadow_offset" format="reference|dimension"/>
+
+
+
     </declare-styleable>
 
 </resources>
