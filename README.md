@@ -14,6 +14,8 @@
 - **图片均不能设置宽度和高度** 
 - **图片不支持直接设置Vector矢量资源**
 - **不支持顶部/底部绘制分割线**
+- **左 中 右 区域识别有误差 **
+- **不支持右侧View为Switch这种常见情况 ** 
 
 由于原作者的项目近几年好像都没有继续维护了，于是我打算自己动手改进以上的问题，并开源出来。
 
@@ -21,6 +23,7 @@
 
 - 绘制左、中、右侧的文字
 - 绘制左、右侧的图片
+- 定制右侧的Switch(IOS风格)
 - 设置顶部或底部的分割线
 - 定制图片与文字的大小和距离
 
@@ -63,7 +66,7 @@ allprojects {
 属性均可选，不设置的属性则不显示，⭐图片与文字的距离若不设置会有一个默认的距离，可设置任意类型的图片资源。
 
 ```xml
-<com.dmingo.optionbarview.OptionBarView
+  <com.dmingo.optionbarview.OptionBarView
 	 android:id="@+id/opv_1"
 	 android:layout_width="match_parent"
 	 android:layout_height="60dp"
@@ -79,7 +82,8 @@ allprojects {
 	 app:title="中间标题1"
 	 app:title_size="20sp"
 	 app:title_color="@android:color/holo_red_light"
-	 app:right_image_margin_right="20dp"
+	 app:rightViewType="Image"
+	 app:right_view_margin_right="20dp"
 	 app:right_src="@mipmap/ic_launcher"
 	 app:right_src_height="20dp"
 	 app:right_src_width="20dp"
@@ -89,6 +93,39 @@ allprojects {
 	 app:divide_line_color="@android:color/black"
 	 app:divide_line_left_margin="20dp"
 	 app:divide_line_right_margin="20dp"/>
+```
+或者右侧为一个Switch：
+```
+<com.dmingo.optionbarview.OptionBarView
+	   android:id="@+id/opv_switch2"
+	   android:layout_width="match_parent"
+	   android:layout_height="60dp"
+	   android:layout_marginTop="30dp"
+	   android:background="@android:color/white"
+	   app:left_image_margin_left="20dp"
+	   app:left_image_margin_right="5dp"
+	   app:left_src="@mipmap/ic_launcher"
+	   app:left_src_height="24dp"
+	   app:left_src_width="24dp"
+	   app:left_text="左标题"
+	   app:left_text_margin_left="5dp"
+	   app:left_text_size="16sp"
+	   app:title="右侧为Switch2"
+	   app:title_size="20sp"
+	   app:title_color="@android:color/holo_red_light"
+	   app:right_text="switch"
+	   app:right_view_margin_right="10dp"
+	   app:right_view_margin_left="5dp"
+	   app:rightViewType="Switch"
+	   app:switch_background_width="50dp"
+	   app:switch_checkline_width="20dp"
+	   app:switch_uncheck_color="@android:color/holo_blue_bright"
+	   app:switch_uncheckbutton_color="@android:color/holo_purple"
+	   app:switch_checkedbutton_color="@android:color/holo_green_dark"
+	   app:switch_checked_color="@android:color/holo_green_light"
+	   app:switch_checked="true"
+	   app:switch_button_color="@android:color/white"
+	   />
 ```
 
 ### 2、在Java代码里动态添加
@@ -101,7 +138,7 @@ allprojects {
 
 默认开启的是整体点击模式，可以通过`setSplitMode(false)`手动开启
 
-```
+```java
 opv2.setOnClickListener(new View.OnClickListener() {
   @Override
    public void onClick(View view) {
@@ -131,6 +168,19 @@ opv1.setOnOptionItemClickListener(new OptionBarView.OnOptionItemClickListener() 
    }
  });
 ```
+
+#### 分区域点击模式下对Switch进行状态改变监听
+```java
+        opvSwitch = findViewById(R.id.opv_switch);
+        opvSwitch.setSplitMode(true);
+        opvSwitch.setOnSwitchCheckedChangeListener(new OptionBarView.OnSwitchCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(OptionBarView view, boolean isChecked) {
+                Toast.makeText(MainActivity.this,"Switch是否被打开："+isChecked,Toast.LENGTH_SHORT).show();
+            }
+        });
+```
+
 
 ### 4、API
 
