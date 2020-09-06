@@ -19,8 +19,8 @@
         <attr name="right_text_size" format="dimension"/>
         <attr name="right_src_width" format="dimension"/>
         <attr name="right_src_height" format="dimension"/>
-        <attr name="right_image_margin_left" format="dimension"/>
-        <attr name="right_image_margin_right" format="dimension"/>
+        <attr name="right_view_margin_left" format="dimension"/>
+        <attr name="right_view_margin_right" format="dimension"/>
         <attr name="right_text_margin_right" format="dimension"/>
         <attr name="right_text_color" format="color"/>
         <attr name="split_mode" format="boolean"/>

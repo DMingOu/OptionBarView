@@ -80,7 +80,7 @@ allprojects {
 	 app:title="中间标题1"
 	 app:title_size="20sp"
 	 app:title_color="@android:color/holo_red_light"
-	 app:right_image_margin_right="20dp"
+	 app:right_view_margin_right="20dp"
 	 app:right_src="@mipmap/ic_launcher"
 	 app:right_src_height="20dp"
 	 app:right_src_width="20dp"

@@ -26,7 +26,6 @@ import android.widget.Checkable;
 /**
  * @description: 条目类型View
  * @author: DMingO
- * @date: 2020/9/3
  */
 public class OptionBarView extends View implements Checkable {
 
@@ -52,9 +51,12 @@ public class OptionBarView extends View implements Checkable {
      */
     private Bitmap rightImage;
 
+    /**
+     * 判断是否显示控件
+     */
     private boolean isShowLeftImg = true;
     private boolean isShowLeftText = true;
-    private boolean isShowRightImg = true;
+    private boolean isShowRightView = true;
     private boolean isShowRightText = true;
 
     //拆分模式(默认是false，也就是一个整体)
@@ -127,13 +129,13 @@ public class OptionBarView extends View implements Checkable {
      */
     private int rightTextMarginRight = -1;
     /**
-     * 右图的左边距
+     * 右View的左边距
      */
-    private int rightImageMarginLeft = -1;
+    private int rightViewMarginLeft = -1;
     /**
      * 右图的右边距
      */
-    private int rightImageMarginRight = -1;
+    private int rightViewMarginRight = -1;
 
     /**
      * 左图的 宽度大小
@@ -193,6 +195,11 @@ public class OptionBarView extends View implements Checkable {
 
     private int rightViewType = -1;
 
+    /**
+     * 点击完整的条目的事件回调
+     */
+    private OnOptionItemClickListener optionItemClickListener;
+
 
 
 
@@ -213,7 +220,7 @@ public class OptionBarView extends View implements Checkable {
         isShowDivideLine = optBoolean(typedArray ,R.styleable.OptionBarView_show_divide_line,false);
         divide_line_top_gravity = optBoolean(typedArray ,R.styleable.OptionBarView_divide_line_top_gravity,false);
         divide_line_color = optColor(typedArray ,R.styleable.OptionBarView_divide_line_color,Color.parseColor("#DCDCDC"));
-        divide_line_height = optPixelSize(typedArray , R.styleable.OptionBarView_divide_line_height,dp2px(1));
+        divide_line_height = optPixelSize(typedArray , R.styleable.OptionBarView_divide_line_height ,1);
         divide_line_left_margin = optPixelSize(typedArray , R.styleable.OptionBarView_divide_line_left_margin,dp2px(0));
         divide_line_right_margin = optPixelSize(typedArray , R.styleable.OptionBarView_divide_line_right_margin,dp2px(0));
         leftText = optString(typedArray,R.styleable.OptionBarView_left_text,"");
@@ -230,30 +237,40 @@ public class OptionBarView extends View implements Checkable {
         rightTextSize = optPixelSize(typedArray ,R.styleable.OptionBarView_right_text_size ,sp2px(16));
         leftTextSize = optPixelSize(typedArray ,R.styleable.OptionBarView_left_text_size ,sp2px(16));
         leftImageMarginLeft = optPixelSize(typedArray , R.styleable.OptionBarView_left_image_margin_left,dp2px(-1));
-        rightImageMarginLeft = optPixelSize(typedArray , R.styleable.OptionBarView_right_image_margin_left,dp2px(-1));
+        rightViewMarginLeft = optPixelSize(typedArray , R.styleable.OptionBarView_right_view_margin_left,dp2px(-1));
         leftImageMarginRight = optPixelSize(typedArray , R.styleable.OptionBarView_left_image_margin_right,dp2px(-1));
-        rightImageMarginRight = optPixelSize(typedArray , R.styleable.OptionBarView_right_image_margin_right,dp2px(-1));
+        rightViewMarginRight = optPixelSize(typedArray , R.styleable.OptionBarView_right_view_margin_right,dp2px(-1));
         leftTextColor = optColor(typedArray,R.styleable.OptionBarView_left_text_color , Color.BLACK);
         rightTextColor = optColor(typedArray,R.styleable.OptionBarView_right_text_color, Color.BLACK);
         mSplitMode = optBoolean(typedArray,R.styleable.OptionBarView_split_mode,false);
         rightViewType = optInt(typedArray,R.styleable.OptionBarView_rightViewType,-1);
-        leftImage = BitmapFactory.decodeResource(getResources(), optResourceId(typedArray,R.styleable.OptionBarView_left_src,0));
-        //需要加载Vector资源
-        if (leftImage == null) {
-            Bitmap vectorBitmap = decodeVectorToBitmap(optResourceId(typedArray,R.styleable.OptionBarView_left_src,0));
-            if (vectorBitmap != null) {
-                leftImage = vectorBitmap;
-            }
-        }
-        if(rightViewType == RightViewType.IMAGE) {
-            rightImage = BitmapFactory.decodeResource(getResources(), optResourceId(typedArray,R.styleable.OptionBarView_right_src,0));
+
+        int leftImageId = optResourceId(typedArray , R.styleable.OptionBarView_left_src,0);
+        if(leftImageId != 0){
+            leftImage = BitmapFactory.decodeResource(getResources(), leftImageId);
             //需要加载Vector资源
-            if (rightImage == null) {
-                Bitmap vectorBitmap = decodeVectorToBitmap(optResourceId(typedArray,R.styleable.OptionBarView_right_src,0));
+            if (leftImage == null) {
+                Bitmap vectorBitmap = decodeVectorToBitmap(leftImageId);
                 if (vectorBitmap != null) {
-                    rightImage = vectorBitmap;
+                    leftImage = vectorBitmap;
                 }
             }
+        }
+
+        if(rightViewType == RightViewType.IMAGE) {
+            //获取定义的右侧图片ResId属性
+            int rightImageId = optResourceId(typedArray,R.styleable.OptionBarView_right_src,0);
+            if(rightImageId != 0){
+                rightImage = BitmapFactory.decodeResource(getResources(), rightImageId);
+                //需要加载Vector资源
+                if (rightImage == null) {
+                    Bitmap vectorBitmap = decodeVectorToBitmap(optResourceId(typedArray,R.styleable.OptionBarView_right_src,0));
+                    if (vectorBitmap != null) {
+                        rightImage = vectorBitmap;
+                    }
+                }
+            }
+
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -381,8 +398,6 @@ public class OptionBarView extends View implements Checkable {
             }
         }
 
-
-
         //参数获取完毕后 回收typeArray
         typedArray.recycle();
 
@@ -430,7 +445,7 @@ public class OptionBarView extends View implements Checkable {
         //右侧View为 Switch状态
         if(rightViewType == RightViewType.SWITCH){
             float viewPadding = Math.max(switchShadowRadius + switchShadowOffset, switchBorderWidth);
-            switchBackgroundRight = w - (rightImageMarginRight >= 0 ? rightImageMarginRight : (float)mWidth / 32)-viewPadding;
+            switchBackgroundRight = w - (rightViewMarginRight >= 0 ? rightViewMarginRight : (float)mWidth / 32)-viewPadding;
             switchBackgroundLeft = switchBackgroundRight - switchBackgroundWidth + viewPadding;
             switchBackgroundTop = (float) ( h - switchBackgroundHeight) / 2 + viewPadding;
             switchBackgroundBottom = switchBackgroundHeight + switchBackgroundTop - viewPadding;
@@ -523,10 +538,10 @@ public class OptionBarView extends View implements Checkable {
             //有左侧图片，更新左区域的边界
             leftBound =  Math.max(leftBound ,optionRect.right);
         }
-        if (rightImage != null && isShowRightImg && rightViewType == RightViewType.IMAGE) {
+        if (rightImage != null && isShowRightView && rightViewType == RightViewType.IMAGE) {
             // 计算右图范围
             //计算 左右边界坐标值，若有设置右图偏移则使用，否则使用View的宽度/32
-            optionRect.right = mWidth - (rightImageMarginRight >= 0 ? rightImageMarginRight : mWidth / 32);
+            optionRect.right = mWidth - (rightViewMarginRight >= 0 ? rightViewMarginRight : mWidth / 32);
             if(rightImageWidth >= 0){
                 optionRect.left = optionRect.right - rightImageWidth;
             }else {
@@ -573,8 +588,8 @@ public class OptionBarView extends View implements Checkable {
             int w = mWidth;
             //文字右侧有View
             if (rightViewType != -1) {
-                w -= rightImageMarginRight >= 0 ? rightImageMarginRight : (mHeight / 8);//增加右图右间距
-                w -= rightImageMarginLeft >= 0 ? rightImageMarginLeft : (mWidth / 32);//增加右图左间距
+                w -= rightViewMarginRight >= 0 ? rightViewMarginRight : (mHeight / 8);//增加右图右间距
+                w -= rightViewMarginLeft >= 0 ? rightViewMarginLeft : (mWidth / 32);//增加右图左间距
                 w -= Math.max(rightTextMarginRight, 0);//增加右字右间距
                 //扣去右侧View的宽度
                 if(rightViewType == RightViewType.IMAGE){
@@ -614,7 +629,7 @@ public class OptionBarView extends View implements Checkable {
         }
 
         //判断绘制 Switch
-        if(rightViewType == RightViewType.SWITCH){
+        if(rightViewType == RightViewType.SWITCH && isShowRightView){
             //边框宽度
             switchBackgroundPaint.setStrokeWidth(switchBorderWidth);
             switchBackgroundPaint.setStyle(Paint.Style.FILL);
@@ -688,13 +703,6 @@ public class OptionBarView extends View implements Checkable {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 int eventX = (int) event.getX();
-//                if (eventX < mWidth / 8) {
-//                    leftStartTouchDown = true;
-//                } else if (eventX > mWidth * 7 / 8) {
-//                    rightStartTouchDown = true;
-//                } else {
-//                    centerStartTouchDown = true;
-//                }
                 if (eventX <= leftBound) {
                     leftStartTouchDown = true;
                 } else if (eventX >= rightBound ) {
@@ -705,12 +713,12 @@ public class OptionBarView extends View implements Checkable {
                 break;
             case MotionEvent.ACTION_UP:
                 int x = (int) event.getX();
-                if (leftStartTouchDown && x <= leftBound && listener != null) {
-                    listener.leftOnClick();
-                } else if (rightStartTouchDown && x  >= rightBound && listener != null) {
-                    listener.rightOnClick();
-                } else if (centerStartTouchDown && listener != null) {
-                    listener.centerOnClick();
+                if (leftStartTouchDown && x <= leftBound && optionItemClickListener != null) {
+                    optionItemClickListener.leftOnClick();
+                } else if (rightStartTouchDown && x  >= rightBound && optionItemClickListener != null) {
+                    optionItemClickListener.rightOnClick();
+                } else if (centerStartTouchDown && optionItemClickListener != null) {
+                    optionItemClickListener.centerOnClick();
                 }
                 leftStartTouchDown = false;
                 centerStartTouchDown = false;
@@ -885,9 +893,15 @@ public class OptionBarView extends View implements Checkable {
         invalidate();
     }
 
-    public void setRightImageWidthHeight(int width, int Height){
-        this.rightImageWidth = width;
-        this.rightImageHeight = Height;
+    public void setRightViewWidthHeight(int width, int height){
+        if(rightViewType == RightViewType.SWITCH){
+            this.switchBackgroundWidth = width;
+            this.switchBackgroundHeight = height;
+        }
+        if(rightViewType == RightViewType.IMAGE){
+            this.rightImageWidth = width;
+            this.rightImageHeight = height;
+        }
         invalidate();
     }
 
@@ -920,13 +934,13 @@ public class OptionBarView extends View implements Checkable {
         return rightText;
     }
 
-    public void setRightImageMarginLeft(int dp) {
-        rightImageMarginLeft = dp2px(dp);
+    public void setRightViewMarginLeft(int dp) {
+        rightViewMarginLeft = dp2px(dp);
         invalidate();
     }
 
-    public void setRightImageMarginRight(int dp) {
-        this.rightImageMarginRight = dp2px(dp);
+    public void setRightViewMarginRight(int dp) {
+        this.rightViewMarginRight = dp2px(dp);
         invalidate();
     }
 
@@ -945,8 +959,8 @@ public class OptionBarView extends View implements Checkable {
         invalidate();
     }
 
-    public void showRightImg(boolean flag) {
-        isShowRightImg = flag;
+    public void showRightView(boolean flag) {
+        isShowRightView = flag;
         invalidate();
     }
 
@@ -955,8 +969,8 @@ public class OptionBarView extends View implements Checkable {
         invalidate();
     }
 
-    public void setSplitMode(boolean spliteMode) {
-        mSplitMode = spliteMode;
+    public void setSplitMode(boolean splitMode) {
+        mSplitMode = splitMode;
     }
 
     public boolean getSplitMode() {
@@ -976,8 +990,19 @@ public class OptionBarView extends View implements Checkable {
         invalidate();
     }
 
+    public int getRightViewType(){
+        return rightViewType;
+    }
+
+    //Switch状态监听
     public void setOnSwitchCheckedChangeListener(OnSwitchCheckedChangeListener l){
         onSwitchCheckedChangeListener = l;
+        invalidate();
+    }
+
+
+    public void setOnOptionItemClickListener(OnOptionItemClickListener listener) {
+        this.optionItemClickListener = listener;
     }
 
 
@@ -992,20 +1017,14 @@ public class OptionBarView extends View implements Checkable {
     private  final int DEFAULT_SWITCH_BACKGROUND_WIDTH = dp2px(45);
     private  final int DEFAULT_SWITCH_BACKGROUND_HEIGHT = dp2px(25);
     /**
-     * 动画状态：
-     * 0.静止
-     * 1.进入拖动
-     * 2.处于拖动
-     * 3.拖动-复位
-     * 4.拖动-切换
-     * 5.点击切换
-     * **/
-    private final int ANIMATE_STATE_NONE = 0;
-    private final int ANIMATE_STATE_PENDING_DRAG = 1;
-    private final int ANIMATE_STATE_DRAGING = 2;
-    private final int ANIMATE_STATE_PENDING_RESET = 3;
-    private final int ANIMATE_STATE_PENDING_SETTLE = 4;
-    private final int ANIMATE_STATE_SWITCH = 5;
+     * 背景位置 坐标
+     */
+    private float switchBackgroundLeft;
+    private float switchBackgroundTop    ;
+    private float switchBackgroundRight  ;
+    private float switchBackgroundBottom ;
+    private float centerX;
+    private float centerY;
 
     /**
      * 阴影半径
@@ -1037,26 +1056,18 @@ public class OptionBarView extends View implements Checkable {
      */
     private float switchBackgroundHeight;
 
-    /**
-     * 背景位置 坐标
-     */
-    private float switchBackgroundLeft;
-    private float switchBackgroundTop    ;
-    private float switchBackgroundRight  ;
-    private float switchBackgroundBottom ;
-    private float centerX;
-    private float centerY;
+
 
     /**
      * 关闭后的背景底色
      */
     private int uncheckSwitchBackground;
     /**
-     * 背景关闭颜色
+     * 关闭后的背景颜色
      */
     private int uncheckColor;
     /**
-     * 背景打开颜色
+     * 打开后的背景颜色
      */
     private int switchCheckedColor;
     /**
@@ -1069,19 +1080,19 @@ public class OptionBarView extends View implements Checkable {
      */
     private int checkIndicatorLineColor;
     /**
-     * 打开后的指示线宽
+     * 打开后的指示线宽度（X轴）
      */
     private int checkIndicatorLineWidth;
     /**
-     * 打开后的指示线长
+     * 打开后的指示线的长度(Y轴)
      */
     private float checkLineLength;
     /**
-     *打开后的指示线位移X
+     *打开后的指示线X轴的位移
      */
     private float switchCheckedLineOffsetX;
     /**
-     *打开后的指示线位移Y
+     *打开后的指示线Y轴的位移
      */
     private float switchCheckedLineOffsetY;
     
@@ -1094,7 +1105,7 @@ public class OptionBarView extends View implements Checkable {
      */
     private int uncheckCircleWidth;
     /**
-     *关闭后的圆圈位移X
+     *关闭后的圆圈的x轴位移
      */
     private float uncheckCircleOffsetX;
     /**
@@ -1139,13 +1150,30 @@ public class OptionBarView extends View implements Checkable {
 
     private RectF switchBackgroundRect;
 
+
+
+    /**
+     * 动画状态：
+     * 0.静止
+     * 1.进入拖动
+     * 2.处于拖动
+     * 3.拖动-复位
+     * 4.拖动-切换
+     * 5.点击切换
+     */
+    private final int ANIMATE_STATE_NONE = 0;
+    private final int ANIMATE_STATE_PENDING_DRAG = 1;
+    private final int ANIMATE_STATE_DRAGING = 2;
+    private final int ANIMATE_STATE_PENDING_RESET = 3;
+    private final int ANIMATE_STATE_PENDING_SETTLE = 4;
+    private final int ANIMATE_STATE_SWITCH = 5;
+
     /**
      * 动画状态
      */
     private int animateState = ANIMATE_STATE_NONE;
-
     /**
-     *
+     * 动画执行器
      */
     private ValueAnimator switchValueAnimator;
 
@@ -1452,7 +1480,7 @@ public class OptionBarView extends View implements Checkable {
      */
     @Override
     public void setChecked(boolean checked) {
-        if(rightViewType != RightViewType.SWITCH){
+        if(rightViewType == RightViewType.IMAGE){
             return;
         }
         //与当前状态相同则直接刷新
@@ -1460,8 +1488,10 @@ public class OptionBarView extends View implements Checkable {
             postInvalidate();
             return;
         }
-        //切换状态
-        toggle(enableSwitchAnimate, false);
+        //Switch,需要切换状态
+        if(rightViewType == RightViewType.SWITCH){
+            toggle(enableSwitchAnimate, false);
+        }
     }
 
 
@@ -1475,7 +1505,9 @@ public class OptionBarView extends View implements Checkable {
 
     @Override
     public void toggle() {
-        toggle(true);
+        if(rightViewType == RightViewType.SWITCH){
+            toggle(true);
+        }
     }
 
     /**
@@ -1739,10 +1771,8 @@ public class OptionBarView extends View implements Checkable {
 
 
     /**
-     * 点击完整的条目的事件回调
+     * 分区域点击 事件接口
      */
-    private OnOptionItemClickListener listener;
-
     public interface OnOptionItemClickListener {
         void leftOnClick();
 
@@ -1751,9 +1781,14 @@ public class OptionBarView extends View implements Checkable {
         void rightOnClick();
     }
 
-    public void setOnOptionItemClickListener(OnOptionItemClickListener listener) {
-        this.listener = listener;
+    /*
+     * Switch 状态事件改变回调接口
+     */
+    public interface OnSwitchCheckedChangeListener{
+        void onCheckedChanged(OptionBarView view, boolean isSwitchChecked);
     }
+
+
 
 
 
@@ -1808,14 +1843,6 @@ public class OptionBarView extends View implements Checkable {
         else return def;
     }
 
-
-
-
-
-
-
-
-
     private int sp2px(float spVal) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
                 spVal, Resources.getSystem().getDisplayMetrics());
@@ -1859,14 +1886,8 @@ public class OptionBarView extends View implements Checkable {
 
         int SWITCH = 1;
         
-        int CHECK = 2;
     }
 
-    /*
-     * Switch 状态事件改变回调接口
-     */
-    public interface OnSwitchCheckedChangeListener{
-        void onCheckedChanged(OptionBarView view, boolean isSwitchChecked);
-    }
+
 
 }
