@@ -230,6 +230,11 @@ setDivideLineColor(int divideLineColor)
 
 主要是对一些图片文字的距离属性的说明。看图就能明白了。
 
+属性更新说明：
+
+~~right_image_margin_left~~   更新为  `right_view_margin_left`
+
+~~right_image_margin_right~~  更新为 `right_view_margin_right`
 
 <img src="http://picbed-dmingou.oss-cn-shenzhen.aliyuncs.com/img/snipaste_20200904_134534.png" width="40%" height="40%">
 
