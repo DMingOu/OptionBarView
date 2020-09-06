@@ -96,26 +96,15 @@ allprojects {
 ```
 或者右侧为一个Switch：
 ```xml
-<com.dmingo.optionbarview.OptionBarView
+  <com.dmingo.optionbarview.OptionBarView
 	   android:id="@+id/opv_switch2"
 	   android:layout_width="match_parent"
 	   android:layout_height="60dp"
 	   android:layout_marginTop="30dp"
 	   android:background="@android:color/white"
-	   app:left_image_margin_left="20dp"
-	   app:left_image_margin_right="5dp"
-	   app:left_src="@mipmap/ic_launcher"
-	   app:left_src_height="24dp"
-	   app:left_src_width="24dp"
-	   app:left_text="左标题"
-	   app:left_text_margin_left="5dp"
-	   app:left_text_size="16sp"
-	   app:title="右侧为Switch2"
-	   app:title_size="20sp"
-	   app:title_color="@android:color/holo_red_light"
 	   app:right_text="switch"
 	   app:right_view_margin_right="10dp"
-	   app:right_view_margin_left="5dp"
+	   app:right_view_margin_left="0dp"
 	   app:rightViewType="Switch"
 	   app:switch_background_width="50dp"
 	   app:switch_checkline_width="20dp"
@@ -123,8 +112,8 @@ allprojects {
 	   app:switch_uncheckbutton_color="@android:color/holo_purple"
 	   app:switch_checkedbutton_color="@android:color/holo_green_dark"
 	   app:switch_checked_color="@android:color/holo_green_light"
-	   app:switch_checked="true"
 	   app:switch_button_color="@android:color/white"
+	   app:switch_checked="true"				  
 	   />
 ```
 
