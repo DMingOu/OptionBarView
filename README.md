@@ -95,7 +95,7 @@ allprojects {
 	 app:divide_line_right_margin="20dp"/>
 ```
 或者右侧为一个Switch：
-```
+```xml
 <com.dmingo.optionbarview.OptionBarView
 	   android:id="@+id/opv_switch2"
 	   android:layout_width="match_parent"
