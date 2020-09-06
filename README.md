@@ -54,7 +54,7 @@ allprojects {
 
 ```
 	dependencies {
-	    implementation 'com.github.DMingOu:OptionBarView:1.0.0'
+	    implementation 'com.github.DMingOu:OptionBarView:1.1.0'
 	}
 ```
 
